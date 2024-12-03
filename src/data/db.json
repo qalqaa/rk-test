@@ -1,0 +1,15 @@
+{
+  "courses": [
+    {
+      "0": {
+        "id": 1,
+        "name": "John Doe"
+      },
+      "1": {
+        "id": 2,
+        "name": "Jane Doe"
+      },
+      "id": "d594"
+    }
+  ]
+}

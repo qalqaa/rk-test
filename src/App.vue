@@ -1,17 +1,39 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+import { onMounted, ref } from "vue";
+import { ICourse } from "./model/type";
 
+const data = ref<ICourse[]>();
+
+const id = ref("");
+const name = ref("");
+
+const sendData = () => {
+  fetch("http://localhost:3000/courses", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+const getData = () => {};
+
+onMounted(() => {
+  fetch("http://localhost:3000/courses")
+    .then((response) => response.json())
+    .then((data) => {
+      data.value = data;
+    });
+});
+</script>
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <input v-model="id" type="text" name="" id="" />
+    <input v-model="name" type="text" name="" id="" />
+    {{ data ? data.map((item) => item.name) : "Sosal?" }}
+    <button @click="sendData">Send</button>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
