@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { Api } from "./data/api";
 import { ICourse } from "./model/type";
 
 const data = ref<ICourse[]>();
@@ -7,32 +8,25 @@ const data = ref<ICourse[]>();
 const id = ref("");
 const name = ref("");
 
-const sendData = () => {
-  fetch("http://localhost:3000/courses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+async function handlePost() {
+  Api.postCourse({ id: id.value, name: name.value }).finally(() => {
+    renderCourses();
   });
+}
+const renderCourses = async () => {
+  data.value = await Api.getCourses();
 };
 
-const getData = () => {};
-
-onMounted(() => {
-  fetch("http://localhost:3000/courses")
-    .then((response) => response.json())
-    .then((data) => {
-      data.value = data;
-    });
+onMounted(async () => {
+  renderCourses();
 });
 </script>
 <template>
-  <div>
+  <div class="bebra">
     <input v-model="id" type="text" name="" id="" />
     <input v-model="name" type="text" name="" id="" />
     {{ data ? data.map((item) => item.name) : "Sosal?" }}
-    <button @click="sendData">Send</button>
+    <button @click="handlePost">Send</button>
   </div>
 </template>
 
@@ -48,5 +42,11 @@ onMounted(() => {
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.bebra {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 }
 </style>
