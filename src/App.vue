@@ -22,7 +22,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="bebra">
+  <div class="bebra2">
     <input v-model="id" type="text" name="" id="" />
     <input v-model="name" type="text" name="" id="" />
     {{ data ? data.map((item) => item.name) : "Sosal?" }}
